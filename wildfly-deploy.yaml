@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wildfly10-kubeping
+spec:
+  selector:
+    matchLabels:
+      app: wildfly10-kubeping
+  replicas: 2
+  template: 
+    metadata:
+      labels:
+        app: wildfly10-kubeping
+    spec:
+      containers:
+        - name: wildfly10-kubeping
+          image: andrevcf/wildfly10-kubeping:latest
+          resources:
+            requests:
+              memory: 300Mi
+            limits:
+              memory: 800Mi
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+            - containerPort: 7600 #jgroups default
+            - containerPort: 8888 #jgroups undertow
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP            
