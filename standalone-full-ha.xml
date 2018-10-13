@@ -314,13 +314,9 @@
                     <transport type="TCP" socket-binding="jgroups-tcp"/>
                     <!-- <protocol type="MPING" socket-binding="jgroups-mping"/> -->
                     <protocol type="org.jgroups.protocols.kubernetes.KUBE_PING" module="org.jgroups.kubernetes">
-                        <!--
-                        <property name="port_range">0</property>
-                        -->
                         <property name="namespace">${env.MY_POD_NAMESPACE}</property>
                         <property name="masterHost">${env.KUBERNETES_SERVICE_HOST}</property>
                         <property name="masterPort">${env.KUBERNETES_SERVICE_PORT}</property>
-                        <!-- <property name="dump_requests">false</property> -->
                     </protocol>
                     <protocol type="MERGE3"/>
                     <protocol type="FD_SOCK" socket-binding="jgroups-tcp-fd"/>
